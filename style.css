@@ -11,6 +11,22 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+.hero-video {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 100vw;          /* full viewport width */
+  height: 100vh;         /* ensures coverage */
+
+  object-fit: cover;     /* prevents stretching */
+
+  transform: translate(-50%, -50%);
+  
+  z-index: 0;
+}
+
 /* HERO TITLE */
 .hero h1 {
   font-family: 'Playfair Display', serif;
@@ -41,23 +57,9 @@ body {
   min-height: 420px;
   max-height: 700px;
 
+  overflow: hidden;
   display: flex;
   align-items: center;
-
-  background-size: cover;
-  background-position: center;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
-  background-image: inherit; /* copies your inline background */
-  background-size: cover;
-  background-position: center;
-  transform: scale(1.1);
-  animation: heroZoom 6s ease-out forwards;
-  z-index: -1; /* behind content */
 }
 
 @keyframes heroZoom {
@@ -72,6 +74,19 @@ body {
 }
 .hero-content h1 {
   animation: fadeUp 0.9s ease-out forwards;
+}
+
+.hero-content,
+.hero-top {
+  position: relative;
+  z-index: 2;   /* higher than video */
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1;
 }
 
 .hero-content p {
