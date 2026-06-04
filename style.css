@@ -62,6 +62,10 @@ body {
   align-items: center;
 
   isolation: isolate;
+
+  background-image: url("your-image.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 /* VIDEO */
