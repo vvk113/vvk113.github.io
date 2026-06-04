@@ -10,6 +10,19 @@ body {
   color: #eaeaea;
   font-family: 'Inter', sans-serif;
 }
+
+.cert-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cert-table th,
+.cert-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
 .work-samples {
   padding: 80px 20px;
 }
