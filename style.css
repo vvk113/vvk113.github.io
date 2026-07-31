@@ -35,7 +35,8 @@ body {
 }
 
 .work-samples {
-  padding: 40px 20px;
+  padding: 0;
+  margin: 0;
 }
 
 .sample-grid {
@@ -355,4 +356,12 @@ section {
 .sample-card h4 a:focus {
   outline: 2px solid #000;
   outline-offset: 3px;
+}
+
+.work-block {
+  margin: 0;
+}
+
+.sample-grid {
+  margin: 0;
 }
