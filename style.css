@@ -48,11 +48,9 @@ body {
 
 .sample-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  justify-content: start;
 }
-
 
 .sample-card {
   display: block;
