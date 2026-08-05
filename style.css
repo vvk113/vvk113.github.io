@@ -11,7 +11,7 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-button {
+.portfolio-button {
   background: #111;
   color: white;
   padding: 10px 20px;
@@ -20,7 +20,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.portfolio-button:hover {
   background: #333;
 }
 
