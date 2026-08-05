@@ -1,0 +1,162 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<main class="wp-block-group">
+
+<!-- wp:heading -->
+<h1>Marketing Demo Components</h1>
+<!-- /wp:heading -->
+
+<!-- wp:html -->
+
+<div class="demo-card">
+
+    <h2>Loan Payment Calculator</h2>
+
+    <label>Loan amount (€)</label>
+    <input id="loan" type="number" placeholder="e.g. 200000">
+
+    <label>Interest rate (%)</label>
+    <input id="interest" type="number" step="0.01" placeholder="e.g. 4.5">
+
+    <label>Loan period (years)</label>
+    <input id="years" type="number" placeholder="e.g. 25">
+
+    <button onclick="calculateLoan()">Calculate monthly payment</button>
+
+    <p id="loan-result"></p>
+
+</div>
+
+
+<div class="demo-card">
+
+    <h2>BMI Calculator</h2>
+
+    <label>Weight (kg)</label>
+    <input id="weight" type="number" placeholder="e.g. 70">
+
+    <label>Height (cm)</label>
+    <input id="height" type="number" placeholder="e.g. 175">
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <p id="bmi-result"></p>
+
+</div>
+
+
+<style>
+
+.demo-card {
+    background: #f5f5f5;
+    padding: 30px;
+    margin: 30px 0;
+    border-radius: 16px;
+}
+
+.demo-card h2 {
+    margin-top: 0;
+}
+
+.demo-card label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.demo-card input {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+    margin-top: 8px;
+}
+
+.demo-card button {
+    margin-top: 20px;
+    background: #111;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.demo-card button:hover {
+    opacity: 0.8;
+}
+
+</style>
+
+
+<script>
+
+function calculateLoan() {
+
+    const loan = Number(document.getElementById("loan").value);
+    const interest = Number(document.getElementById("interest").value);
+    const years = Number(document.getElementById("years").value);
+
+    if (!loan || !interest || !years) {
+        document.getElementById("loan-result").innerHTML =
+            "Please enter all values.";
+        return;
+    }
+
+    const monthlyRate = (interest / 100) / 12;
+    const months = years * 12;
+
+    const payment =
+        loan *
+        monthlyRate *
+        Math.pow(1 + monthlyRate, months) /
+        (Math.pow(1 + monthlyRate, months) - 1);
+
+    document.getElementById("loan-result").innerHTML =
+        "Monthly payment: €" + payment.toFixed(2);
+
+}
+
+
+function calculateBMI() {
+
+    const weight = Number(document.getElementById("weight").value);
+    const height = Number(document.getElementById("height").value) / 100;
+
+    if (!weight || !height) {
+        document.getElementById("bmi-result").innerHTML =
+            "Please enter weight and height.";
+        return;
+    }
+
+    const bmi = weight / (height * height);
+
+    let category;
+
+    if (bmi < 18.5) {
+        category = "Underweight";
+    } 
+    else if (bmi < 25) {
+        category = "Normal weight";
+    } 
+    else if (bmi < 30) {
+        category = "Overweight";
+    } 
+    else {
+        category = "Obese";
+    }
+
+    document.getElementById("bmi-result").innerHTML =
+        "BMI: " + bmi.toFixed(1) + " (" + category + ")";
+
+}
+
+</script>
+
+<!-- /wp:html -->
+
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
