@@ -373,3 +373,20 @@ section {
 .sample-grid {
   margin: 0;
 }
+/* Vertical News Reel */
+#news .sample-media {
+  height: auto;
+  aspect-ratio: 9 / 16;
+  background: #000;
+}
+
+#news .sample-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#news .sample-grid {
+  grid-template-columns: minmax(280px, 500px);
+  justify-content: center;
+}
