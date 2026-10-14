@@ -1,6 +1,5 @@
 ---
 title: All Reels & Videos
-layout: default
 paginate: true
 ---
 <!DOCTYPE html>
@@ -11,56 +10,214 @@ paginate: true
     <title>{{ page.title }}</title>
     <style>
         :root {
-            --bg-color: #faf9f6;
-            --card-bg: #ffffff;
-            --text-main: #2b2b2b;
-            --accent-pink: #ffd6d6;
-            --accent-blue: #d6e4ff;
-            --accent-purple: #ebd6ff;
-            --border-radius: 16px;
-        }
+    --bg-color: #faf9f6;
+    --card-bg: #ffffff;
+    --text-main: #2b2b2b;
+    --accent-pink: #ffd6d6;
+    --accent-blue: #d6e4ff;
+    --accent-purple: #ebd6ff;
+    --border-radius: 16px;
+}
 
-        body {
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+body {
+    font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .container { width: 100%; max-width: 1200px; }
-        h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 30px; text-align: center; }
+.container { 
+    width: 100%; 
+    max-width: 1200px; 
+}
 
-        /* Haku ja napit */
-        .controls-wrapper { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
-        .search-input { width: 100%; padding: 14px 20px; font-size: 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 30px; box-sizing: border-box; outline: none; }
-        .filter-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .btn-filter { padding: 8px 16px; border: 1px solid rgba(0,0,0,0.05); background: var(--card-bg); border-radius: 20px; font-weight: 600; cursor: pointer; }
-        .btn-filter.active, .btn-filter:hover { background: var(--text-main); color: #ffffff; }
+h1 { 
+    font-weight: 800; 
+    letter-spacing: -1px; 
+    margin-bottom: 30px; 
+    text-align: center; 
+}
 
-        /* Ruudukko */
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; width: 100%; margin-bottom: 40px; }
-        .video-card { background: var(--card-bg); border: 1px solid rgba(0,0,0,0.05); border-radius: var(--border-radius); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.03); }
-        .video-wrapper { position: relative; width: 100%; aspect-ratio: 9 / 16; background: #000; }
-        video { width: 100%; height: 100%; object-fit: cover; }
-        
-        .video-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .video-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 0; }
-        .video-desc { font-size: 0.9rem; opacity: 0.6; margin: 0 0 15px 0; line-height: 1.4; }
-        .tag-container { display: flex; gap: 6px; }
-        .tag { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; }
-        
-        .tag-fi { background-color: var(--accent-blue); }
-        .tag-en { background-color: var(--accent-pink); }
-        .tag-reels { background-color: var(--accent-purple); }
+/* 🔍 Haku ja napit */
+.controls-wrapper { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    margin-bottom: 40px; 
+}
 
-        /* Jekyll Sivutusnavigaatio */
-        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
-        .page-link { padding: 10px 16px; border: 1px solid rgba(0,0,0,0.05); background: var(--card-bg); color: var(--text-main); text-decoration: none; border-radius: 20px; font-weight: 600; }
-        .page-link.active, .page-link:hover { background: var(--text-main); color: #ffffff; }
+.search-input { 
+    width: 100%; 
+    padding: 14px 20px; 
+    font-size: 1rem; 
+    border: 1px solid rgba(0,0,0,0.1); 
+    border-radius: 30px; 
+    box-sizing: border-box; 
+    outline: none; 
+}
+
+.filter-buttons { 
+    display: flex; 
+    gap: 10px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.btn-filter { 
+    padding: 8px 16px; 
+    border: 1px solid rgba(0,0,0,0.05); 
+    background: var(--card-bg); 
+    border-radius: 20px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: all 0.2s ease;
+}
+
+.btn-filter.active, .btn-filter:hover { 
+    background: var(--text-main); 
+    color: #ffffff; 
+}
+
+/* 📱 Video-ruudukko */
+.video-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+    gap: 30px; 
+    width: 100%; 
+    margin-bottom: 40px; 
+}
+
+.video-card { 
+    background: var(--card-bg); 
+    border: 1px solid rgba(0, 0, 0, 0.05); 
+    border-radius: var(--border-radius); 
+    overflow: hidden; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.03); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-card:hover { 
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+
+/* 🎬 Pystysuuntainen kuva-alusta */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #eeeeee;
+    overflow: hidden;
+}
+
+/* 🖼️ Varmistetaan että Canva-esikatselukuva istuu nätisti */
+.video-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ✨ Canva Hover-efektit */
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.video-card:hover .play-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 10px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    letter-spacing: -0.2px;
+}
+
+/* 📝 Tekstiosiot kortissa */
+.video-info { 
+    padding: 20px; 
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+}
+
+.video-title { 
+    font-size: 1.1rem; 
+    font-weight: 700; 
+    margin: 0 0 10px 0; 
+    letter-spacing: -0.3px;
+}
+
+.video-desc { 
+    font-size: 0.9rem; 
+    opacity: 0.6; 
+    margin: 0 0 15px 0; 
+    line-height: 1.4; 
+}
+
+.tag-container { 
+    display: flex; 
+    gap: 6px; 
+}
+
+.tag { 
+    font-size: 0.7rem; 
+    font-weight: 700; 
+    padding: 4px 10px; 
+    border-radius: 12px; 
+    text-transform: uppercase; 
+}
+
+.tag-fi { background-color: var(--accent-blue); }
+.tag-en { background-color: var(--accent-pink); }
+.tag-reels { background-color: var(--accent-purple); }
+
+/* 📄 Jekyll Sivutusnavigaatio */
+.pagination { 
+    display: flex; 
+    justify-content: center; 
+    gap: 10px; 
+    margin-top: 30px; 
+}
+
+.page-link { 
+    padding: 10px 16px; 
+    border: 1px solid rgba(0,0,0,0.05); 
+    background: var(--card-bg); 
+    color: var(--text-main); 
+    text-decoration: none; 
+    border-radius: 20px; 
+    font-weight: 600; 
+    transition: all 0.2s ease;
+}
+
+.page-link.active, .page-link:hover { 
+    background: var(--text-main); 
+    color: #ffffff; 
+    border-color: var(--text-main); 
+}
     </style>
 </head>
 <body>
@@ -80,12 +237,19 @@ paginate: true
         <!-- Ruudukko tulostaa vain tämän sivun 9 videota automaattisesti -->
         <div class="video-grid" id="videoGrid">
             {% for video in paginator.reels %}
-            <div class="video-card" data-title="{{ video.title | downcase }}" data-lang="{{ video.lang }}">
+            <!-- Koko kortti toimii linkkinä Canvaan -->
+            <a href="{{ video.canva_url }}" target="_blank" class="video-card" data-title="{{ video.title | downcase }}" data-lang="{{ video.lang }}" style="text-decoration: none; color: inherit;">
+                
+                <!-- 📸 Tässä on videon esikatselukuva -->
                 <div class="video-wrapper">
-                    <video controls preload="metadata">
-                        <source src="{{ video.video_url }}" type="video/mp4">
-                    </video>
+                    <img src="{{ video.kuva_url }}" alt="{{ video.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    
+                    <!-- Hieno overlay-efekti, joka ilmestyy kun hiiren vie kuvan päälle -->
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch on Canva</span>
+                    </div>
                 </div>
+                
                 <div class="video-info">
                     <div>
                         <h3 class="video-title">{{ video.title }}</h3>
@@ -96,9 +260,10 @@ paginate: true
                         <span class="tag tag-reels">{{ video.platform }}</span>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
         </div>
+
 
         <!-- Jekyllin automaattiset sivunumerot -->
         {% if paginator.total_pages > 1 %}
