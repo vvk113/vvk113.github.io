@@ -1,6 +1,5 @@
 ---
 title: All Reels & Videos
-paginate: true
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -10,214 +9,188 @@ paginate: true
     <title>{{ page.title }}</title>
     <style>
         :root {
-    --bg-color: #faf9f6;
-    --card-bg: #ffffff;
-    --text-main: #2b2b2b;
-    --accent-pink: #ffd6d6;
-    --accent-blue: #d6e4ff;
-    --accent-purple: #ebd6ff;
-    --border-radius: 16px;
-}
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --accent-pink: #ffd6d6;
+            --accent-blue: #d6e4ff;
+            --accent-purple: #ebd6ff;
+            --border-radius: 16px;
+        }
 
-body {
-    font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    margin: 0;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        body {
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.container { 
-    width: 100%; 
-    max-width: 1200px; 
-}
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+        }
 
-h1 { 
-    font-weight: 800; 
-    letter-spacing: -1px; 
-    margin-bottom: 30px; 
-    text-align: center; 
-}
+        h1 { 
+            font-weight: 800; 
+            letter-spacing: -1px; 
+            margin-bottom: 30px; 
+            text-align: center; 
+        }
 
-/* 🔍 Haku ja napit */
-.controls-wrapper { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 15px; 
-    margin-bottom: 40px; 
-}
+        /* 🔍 Haku ja napit */
+        .controls-wrapper { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-bottom: 40px; 
+        }
 
-.search-input { 
-    width: 100%; 
-    padding: 14px 20px; 
-    font-size: 1rem; 
-    border: 1px solid rgba(0,0,0,0.1); 
-    border-radius: 30px; 
-    box-sizing: border-box; 
-    outline: none; 
-}
+        .search-input { 
+            width: 100%; 
+            padding: 14px 20px; 
+            font-size: 1rem; 
+            border: 1px solid rgba(0,0,0,0.1); 
+            border-radius: 30px; 
+            box-sizing: border-box; 
+            outline: none; 
+        }
 
-.filter-buttons { 
-    display: flex; 
-    gap: 10px; 
-    justify-content: center; 
-    flex-wrap: wrap; 
-}
+        .filter-buttons { 
+            display: flex; 
+            gap: 10px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
 
-.btn-filter { 
-    padding: 8px 16px; 
-    border: 1px solid rgba(0,0,0,0.05); 
-    background: var(--card-bg); 
-    border-radius: 20px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    transition: all 0.2s ease;
-}
+        .btn-filter { 
+            padding: 8px 16px; 
+            border: 1px solid rgba(0,0,0,0.05); 
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+        }
 
-.btn-filter.active, .btn-filter:hover { 
-    background: var(--text-main); 
-    color: #ffffff; 
-}
+        .btn-filter.active, .btn-filter:hover { 
+            background: var(--text-main); 
+            color: #ffffff; 
+        }
 
-/* 📱 Video-ruudukko */
-.video-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
-    gap: 30px; 
-    width: 100%; 
-    margin-bottom: 40px; 
-}
+        /* 📱 Video-ruudukko */
+        .video-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+            gap: 30px; 
+            width: 100%; 
+            margin-bottom: 40px; 
+        }
 
-.video-card { 
-    background: var(--card-bg); 
-    border: 1px solid rgba(0, 0, 0, 0.05); 
-    border-radius: var(--border-radius); 
-    overflow: hidden; 
-    display: flex; 
-    flex-direction: column; 
-    box-shadow: 0 8px 24px rgba(0,0,0,0.03); 
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+        .video-card { 
+            background: var(--card-bg); 
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            border-radius: var(--border-radius); 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03); 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
 
-.video-card:hover { 
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-}
+        .video-card:hover { 
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
 
-/* 🎬 Pystysuuntainen kuva-alusta */
-.video-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 9 / 16;
-    background: #eeeeee;
-    overflow: hidden;
-}
+        /* 🎬 Pystysuuntainen kuva-alusta */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #eeeeee;
+            overflow: hidden;
+        }
 
-/* 🖼️ Varmistetaan että Canva-esikatselukuva istuu nätisti */
-.video-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        .video-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-/* ✨ Canva Hover-efektit */
-.play-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
+        /* ✨ Canva Hover-efektit */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
 
-.video-card:hover .play-overlay {
-    opacity: 1;
-}
+        .video-card:hover .play-overlay {
+            opacity: 1;
+        }
 
-.play-icon {
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 0.95rem;
-    background: rgba(0, 0, 0, 0.75);
-    padding: 10px 20px;
-    border-radius: 30px;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    letter-spacing: -0.2px;
-}
+        .play-icon {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: -0.2px;
+        }
 
-/* 📝 Tekstiosiot kortissa */
-.video-info { 
-    padding: 20px; 
-    flex-grow: 1; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: space-between; 
-}
+        /* 📝 Tekstiosiot kortissa */
+        .video-info { 
+            padding: 20px; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+        }
 
-.video-title { 
-    font-size: 1.1rem; 
-    font-weight: 700; 
-    margin: 0 0 10px 0; 
-    letter-spacing: -0.3px;
-}
+        .video-title { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            margin: 0 0 10px 0; 
+            letter-spacing: -0.3px;
+        }
 
-.video-desc { 
-    font-size: 0.9rem; 
-    opacity: 0.6; 
-    margin: 0 0 15px 0; 
-    line-height: 1.4; 
-}
+        .video-desc { 
+            font-size: 0.9rem; 
+            opacity: 0.6; 
+            margin: 0 0 15px 0; 
+            line-height: 1.4; 
+        }
 
-.tag-container { 
-    display: flex; 
-    gap: 6px; 
-}
+        .tag-container { 
+            display: flex; 
+            gap: 6px; 
+        }
 
-.tag { 
-    font-size: 0.7rem; 
-    font-weight: 700; 
-    padding: 4px 10px; 
-    border-radius: 12px; 
-    text-transform: uppercase; 
-}
+        .tag { 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            padding: 4px 10px; 
+            border-radius: 12px; 
+            text-transform: uppercase; 
+        }
 
-.tag-fi { background-color: var(--accent-blue); }
-.tag-en { background-color: var(--accent-pink); }
-.tag-reels { background-color: var(--accent-purple); }
-
-/* 📄 Jekyll Sivutusnavigaatio */
-.pagination { 
-    display: flex; 
-    justify-content: center; 
-    gap: 10px; 
-    margin-top: 30px; 
-}
-
-.page-link { 
-    padding: 10px 16px; 
-    border: 1px solid rgba(0,0,0,0.05); 
-    background: var(--card-bg); 
-    color: var(--text-main); 
-    text-decoration: none; 
-    border-radius: 20px; 
-    font-weight: 600; 
-    transition: all 0.2s ease;
-}
-
-.page-link.active, .page-link:hover { 
-    background: var(--text-main); 
-    color: #ffffff; 
-    border-color: var(--text-main); 
-}
+        .tag-fi { background-color: var(--accent-blue); }
+        .tag-en { background-color: var(--accent-pink); }
+        .tag-reels { background-color: var(--accent-purple); }
     </style>
 </head>
 <body>
@@ -226,7 +199,7 @@ h1 {
         <h1>🎬 All Reels Portfolio</h1>
 
         <div class="controls-wrapper">
-            <input type="text" id="searchInput" class="search-input" placeholder="Search current page...">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search videos...">
             <div class="filter-buttons">
                 <button class="btn-filter active" onclick="filterPage('all')">All</button>
                 <button class="btn-filter" onclick="filterPage('fi')">Finnish 🇫🇮</button>
@@ -234,64 +207,43 @@ h1 {
             </div>
         </div>
 
-        <!-- Ruudukko tulostaa vain tämän sivun 9 videota automaattisesti -->
+        <!-- TÄSSÄ ON RUUDUKKO ILMAN JEKYLL-KANSION LATAUSTA -->
         <div class="video-grid" id="videoGrid">
-            {% for video in paginator.posts %}
-            <!-- Koko kortti toimii linkkinä Canvaan -->
-            <a href="{{ video.canva_url }}" target="_blank" class="video-card" data-title="{{ video.title | downcase }}" data-lang="{{ video.lang }}" style="text-decoration: none; color: inherit;">
-                
-                <!-- 📸 Tässä on videon esikatselukuva -->
+            
+            <!-- 📹 VIDEOKORTTI 1 (Muuta tiedot tähän) -->
+            <a href="https://canva.com" target="_blank" class="video-card" data-title="aesthetic aamurutiini" data-lang="fi" style="text-decoration: none; color: inherit;">
                 <div class="video-wrapper">
-                    <img src="{{ video.kuva_url }}" alt="{{ video.title }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    
-                    <!-- Hieno overlay-efekti, joka ilmestyy kun hiiren vie kuvan päälle -->
+                    <!-- Muuta esikatselukuvan osoite tähän -->
+                    <img src="assets/images/video1-preview.jpg" alt="Aesthetic Aamurutiini">
                     <div class="play-overlay">
                         <span class="play-icon">▶ Watch on Canva</span>
                     </div>
                 </div>
-                
                 <div class="video-info">
                     <div>
-                        <h3 class="video-title">{{ video.title }}</h3>
-                        <p class="video-desc">{{ video.desc }}</p>
+                        <h3 class="video-title">Aesthetic Aamurutiini</h3>
+                        <p class="video-desc">Minivlogi arjen rutiineista ja paremmasta ajanhallinnasta.</p>
                     </div>
                     <div class="tag-container">
-                        <span class="tag tag-{{ video.lang }}">{{ video.lang }}</span>
-                        <span class="tag tag-reels">{{ video.platform }}</span>
+                        <span class="tag tag-fi">fi</span>
+                        <span class="tag tag-reels">reels</span>
                     </div>
                 </div>
             </a>
-            {% endfor %}
+
+            <!-- Voit lisätä uusia kortteja kopioimalla tuon <a>...</a> -blokin suoraan tähän alle -->
+
         </div>
-
-
-        <!-- Jekyllin automaattiset sivunumerot -->
-        {% if paginator.total_pages > 1 %}
-        <div class="pagination">
-            {% if paginator.previous_page %}
-                <a href="{{ paginator.previous_page_path }}" class="page-link">&laquo; Prev</a>
-            {% endif %}
-
-            {% for page in (1..paginator.total_pages) %}
-                {% if page == paginator.page %}
-                    <span class="page-link active">{{ page }}</span>
-                {% elsif page == 1 %}
-                    <a href="/videot.html" class="page-link">{{ page }}</a>
-                {% else %}
-                    <a href="{{ paginator.paginate_path | replace: ':num', page }}" class="page-link">{{ page }}</a>
-                {% endif %}
-            {% endfor %}
-
-            {% if paginator.next_page %}
-                <a href="{{ paginator.next_page_path }}" class="page-link">Next &raquo;</a>
-            {% endif %}
-        </div>
-        {% endif %}
     </div>
 
-    <!-- Kevyt haku tämän sivun sisällä -->
+    <!-- Haku- ja suodatuslogiikka suoraan selaimessa -->
     <script>
         function filterPage(lang) {
+            // Päivitetään aktiivinen painike nätisti
+            const buttons = document.querySelectorAll('.btn-filter');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
             const cards = document.querySelectorAll('.video-card');
             cards.forEach(card => {
                 if (lang === 'all' || card.getAttribute('data-lang') === lang) {
@@ -300,13 +252,20 @@ h1 {
                     card.style.display = 'none';
                 }
             });
+            document.getElementById('searchInput').value = '';
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             document.querySelectorAll('.video-card').forEach(card => {
                 const title = card.getAttribute('data-title');
-                card.style.display = title.includes(query) ? 'flex' : 'none';
+                const desc = card.querySelector('.video-desc').textContent.toLowerCase();
+                
+                if (title.includes(query) || desc.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         });
     </script>
