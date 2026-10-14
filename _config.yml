@@ -1,0 +1,10 @@
+collections:
+  reels:
+    output: false
+
+# Aktivoidaan Jekyllin virallinen sivutuslisäosa
+plugins:
+  - jekyll-paginate
+
+paginate: 9 # Kuinka monta videota näytetään kerralla yhdellä sivulla
+paginate_path: "/videot/page:num/"
