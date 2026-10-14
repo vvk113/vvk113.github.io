@@ -236,7 +236,7 @@ h1 {
 
         <!-- Ruudukko tulostaa vain tämän sivun 9 videota automaattisesti -->
         <div class="video-grid" id="videoGrid">
-            {% for video in paginator.reels %}
+            {% for video in paginator.posts %}
             <!-- Koko kortti toimii linkkinä Canvaan -->
             <a href="{{ video.canva_url }}" target="_blank" class="video-card" data-title="{{ video.title | downcase }}" data-lang="{{ video.lang }}" style="text-decoration: none; color: inherit;">
                 
