@@ -1,0 +1,149 @@
+---
+title: All Reels & Videos
+layout: default
+paginate: true
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        :root {
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --accent-pink: #ffd6d6;
+            --accent-blue: #d6e4ff;
+            --accent-purple: #ebd6ff;
+            --border-radius: 16px;
+        }
+
+        body {
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { width: 100%; max-width: 1200px; }
+        h1 { font-weight: 800; letter-spacing: -1px; margin-bottom: 30px; text-align: center; }
+
+        /* Haku ja napit */
+        .controls-wrapper { display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .search-input { width: 100%; padding: 14px 20px; font-size: 1rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 30px; box-sizing: border-box; outline: none; }
+        .filter-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn-filter { padding: 8px 16px; border: 1px solid rgba(0,0,0,0.05); background: var(--card-bg); border-radius: 20px; font-weight: 600; cursor: pointer; }
+        .btn-filter.active, .btn-filter:hover { background: var(--text-main); color: #ffffff; }
+
+        /* Ruudukko */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; width: 100%; margin-bottom: 40px; }
+        .video-card { background: var(--card-bg); border: 1px solid rgba(0,0,0,0.05); border-radius: var(--border-radius); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(0,0,0,0.03); }
+        .video-wrapper { position: relative; width: 100%; aspect-ratio: 9 / 16; background: #000; }
+        video { width: 100%; height: 100%; object-fit: cover; }
+        
+        .video-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .video-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 0; }
+        .video-desc { font-size: 0.9rem; opacity: 0.6; margin: 0 0 15px 0; line-height: 1.4; }
+        .tag-container { display: flex; gap: 6px; }
+        .tag { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 12px; text-transform: uppercase; }
+        
+        .tag-fi { background-color: var(--accent-blue); }
+        .tag-en { background-color: var(--accent-pink); }
+        .tag-reels { background-color: var(--accent-purple); }
+
+        /* Jekyll Sivutusnavigaatio */
+        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
+        .page-link { padding: 10px 16px; border: 1px solid rgba(0,0,0,0.05); background: var(--card-bg); color: var(--text-main); text-decoration: none; border-radius: 20px; font-weight: 600; }
+        .page-link.active, .page-link:hover { background: var(--text-main); color: #ffffff; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎬 All Reels Portfolio</h1>
+
+        <div class="controls-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search current page...">
+            <div class="filter-buttons">
+                <button class="btn-filter active" onclick="filterPage('all')">All</button>
+                <button class="btn-filter" onclick="filterPage('fi')">Finnish 🇫🇮</button>
+                <button class="btn-filter" onclick="filterPage('en')">English 🇬🇧</button>
+            </div>
+        </div>
+
+        <!-- Ruudukko tulostaa vain tämän sivun 9 videota automaattisesti -->
+        <div class="video-grid" id="videoGrid">
+            {% for video in paginator.reels %}
+            <div class="video-card" data-title="{{ video.title | downcase }}" data-lang="{{ video.lang }}">
+                <div class="video-wrapper">
+                    <video controls preload="metadata">
+                        <source src="{{ video.video_url }}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">{{ video.title }}</h3>
+                        <p class="video-desc">{{ video.desc }}</p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-{{ video.lang }}">{{ video.lang }}</span>
+                        <span class="tag tag-reels">{{ video.platform }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Jekyllin automaattiset sivunumerot -->
+        {% if paginator.total_pages > 1 %}
+        <div class="pagination">
+            {% if paginator.previous_page %}
+                <a href="{{ paginator.previous_page_path }}" class="page-link">&laquo; Prev</a>
+            {% endif %}
+
+            {% for page in (1..paginator.total_pages) %}
+                {% if page == paginator.page %}
+                    <span class="page-link active">{{ page }}</span>
+                {% elsif page == 1 %}
+                    <a href="/videot.html" class="page-link">{{ page }}</a>
+                {% else %}
+                    <a href="{{ paginator.paginate_path | replace: ':num', page }}" class="page-link">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if paginator.next_page %}
+                <a href="{{ paginator.next_page_path }}" class="page-link">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Kevyt haku tämän sivun sisällä -->
+    <script>
+        function filterPage(lang) {
+            const cards = document.querySelectorAll('.video-card');
+            cards.forEach(card => {
+                if (lang === 'all' || card.getAttribute('data-lang') === lang) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            document.querySelectorAll('.video-card').forEach(card => {
+                const title = card.getAttribute('data-title');
+                card.style.display = title.includes(query) ? 'flex' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
