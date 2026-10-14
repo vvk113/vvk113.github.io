@@ -1,9 +1,13 @@
+---
+layout: default
+title: July Social Media Calendar
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>July Social Media Calendar</title>
+    <title>{{ page.title }}</title>
     <style>
         :root {
             --bg-color: #faf9f6;
@@ -21,28 +25,105 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 40px 20px;
+            padding: 40px 0; /* Otettu sivujen padding pois täyslevyisen bannerin takia */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        h1 {
-            font-weight: 700;
-            margin-bottom: 30px;
-            letter-spacing: -0.5px;
-        }
-
-        /* The Grid System */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
+        /* Banneri ja sisältöalueet ohjaavat omia paddingejaan */
+        .container {
             width: 100%;
             max-width: 1200px;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
-        /* Simple Elegant Cards */
+        h1, h2 {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        h2 { margin: 40px 0 20px 0; }
+
+        /* Täyslevyinen Banneri (Hero) */
+        .hero-banner {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-blue) 100%);
+            padding: 80px 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: -40px; /* Kumotaan bodyn yläpadding */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin: 0 0 20px 0;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: rgba(0, 0, 0, 0.7);
+            margin: 0 0 30px 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--text-main);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: var(--text-main);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Yhteiset tyylit korteille */
         .card {
             background: var(--card-bg);
             border: 1px solid rgba(0, 0, 0, 0.05);
@@ -54,6 +135,7 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 140px;
+            box-sizing: border-box;
         }
 
         .card:hover {
@@ -78,7 +160,6 @@
             flex-grow: 1;
         }
 
-        /* Color-coded Tags */
         .tag {
             align-self: flex-start;
             font-size: 0.75rem;
@@ -91,67 +172,69 @@
         .tiktok { background-color: var(--accent-purple); }
         .linkedin { background-color: var(--accent-blue); }
         .youtube { background-color: var(--accent-green); }
+
+        /* 1. Ruudukko */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* 2. Karuselli */
+        .calendar-carousel {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            overflow-x: auto;
+            padding: 10px 0 20px 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .calendar-carousel .card {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+        }
+
+        .calendar-carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+        .calendar-carousel::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        /* Mobiilioptimointi */
+        @media (max-width: 600px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-buttons { flex-direction: column; gap: 10px; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>🗓️ July Content Grid</h1>
-
-    <div class="calendar-grid">
-        <!-- Card 1 -->
-        <div class="card">
-            <div>
-                <div class="date">July 01</div>
-                <div class="topic">Welcome to July! Share 3 goals for this month.</div>
+    <!-- Täyslevyinen Banneri -->
+    <header class="hero-banner">
+        <div class="hero-content">
+            <span class="hero-badge">Portfolio</span>
+            <h1>Creative Content & Strategy</h1>
+            <p>I design visual calendars, track engagement, and build digital stories that connect brands with audiences.</p>
+            <div class="hero-buttons">
+                <a href="#grid-section" class="btn-primary">View Content Grid</a>
+                <a href="mailto:your.email@example.com" class="btn-secondary">Let's Talk</a>
             </div>
-            <span class="tag instagram">Instagram</span>
         </div>
+    </header>
 
-        <!-- Card 2 -->
-        <div class="card">
-            <div>
-                <div class="date">July 03</div>
-                <div class="topic">Summer vibe check: Behind the scenes mini-vlog.</div>
-            </div>
-            <span class="tag tiktok">TikTok</span>
-        </div>
+    <!-- Sisältöalue -->
+    <main class="container" id="grid-section">
+        <h2>Grid View</h2>
+        {% include july-grid.html %}
 
-        <!-- Card 3 -->
-        <div class="card">
-            <div>
-                <div class="date">July 06</div>
-                <div class="topic">Mid-year review: Top 3 lessons learned so far.</div>
-            </div>
-            <span class="tag linkedin">LinkedIn</span>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="card">
-            <div>
-                <div class="date">July 09</div>
-                <div class="topic">Quick tutorial: How to solve a common user problem.</div>
-            </div>
-            <span class="tag instagram">Instagram</span>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="card">
-            <div>
-                <div class="date">July 12</div>
-                <div class="topic">1-minute hack everyone should know.</div>
-            </div>
-            <span class="tag youtube">YouTube</span>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="card">
-            <div>
-                <div class="date">July 15</div>
-                <div class="topic">Product Showcase: Highlighting best summer features.</div>
-            </div>
-            <span class="tag instagram">Instagram</span>
-        </div>
-    </div>
+        <h2>Carousel View</h2>
+        {% include carousel.html %}
+    </main>
 
 </body>
 </html>
