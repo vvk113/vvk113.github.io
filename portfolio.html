@@ -191,6 +191,13 @@ title: All Reels & Videos
         .tag-fi { background-color: var(--accent-blue); }
         .tag-en { background-color: var(--accent-pink); }
         .tag-reels { background-color: var(--accent-purple); }
+
+        .preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -210,19 +217,17 @@ title: All Reels & Videos
         <div class="video-grid" id="videoGrid">
             
             <!-- 📹 VIDEOKORTTI 1  -->
-            <a href="https://ik.imagekit.io/oac9w3q3g/cat-reel-viral.mp4?updatedAt=1792403144468" target="_blank" class="video-card" data-title="video" data-lang="fi" style="text-decoration: none; color: inherit;">
+            <a href="https://ik.imagekit.io/oac9w3q3g/cat-reel-viral.mp4?updatedAt=1792403144468" target="_blank" rel="noopener noreferrer" class="video-card" data-title="video" data-lang="fi" style="text-decoration: none; color: inherit;">
                 <div class="video-wrapper">
-                    <video class="preview-video" loop playsinline preload="metadata">
-                        <source src="https://ik.imagekit.io/oac9w3q3g/cat-reel-viral.mp4?updatedAt=1792403144468" type="video/mp4">
-                    </video>
+                    <img src="https://ik.imagekit.io/oac9w3q3g/preview-video1.JPG" alt="Viraali Reel Video thumbnail" class="preview-image" loading="lazy" />
                     <div class="play-overlay">
-                        <span class="play-icon">▶ Watch</span>
+                        <span class="play-icon">▶ Katso</span>
                     </div>
                 </div>
                 <div class="video-info">
                     <div>
                         <h3 class="video-title">Viraali Reel Video</h3>
-                        <p class="video-desc">347 tuhatta katselukertaa kerännyt video omasta harrasteprojektista.</p>
+                        <p class="video-desc">347 tuhatta katselukertaa kerännyt video omasta harrasteprojektista. Video on näytöntallennus youtubesta, joten laatu valitettavasti heikko.</p>
                     </div>
                     <div class="tag-container">
                         <span class="tag tag-fi">fi</span>
