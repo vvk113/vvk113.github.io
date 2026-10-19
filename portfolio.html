@@ -212,9 +212,11 @@ title: All Reels & Videos
             <!-- 📹 VIDEOKORTTI 1  -->
             <a href="https://canva.com" target="_blank" class="video-card" data-title="aesthetic aamurutiini" data-lang="fi" style="text-decoration: none; color: inherit;">
                 <div class="video-wrapper">
-                    <img src="image00001.gif" alt="Uutisvideo">
+                    <video class="preview-video" loop playsinline preload="metadata">
+                        <source src="your-video.mp4" type="video/mp4">
+                    </video>
                     <div class="play-overlay">
-                        <span class="play-icon">▶ Watch on Canva</span>
+                        <span class="play-icon">▶ Watch</span>
                     </div>
                 </div>
                 <div class="video-info">
@@ -319,6 +321,26 @@ title: All Reels & Videos
                 }
             });
         });
+        document.querySelectorAll('.preview-video').forEach(video => {
+    // Desktop: play on hover
+    video.addEventListener('mouseenter', () => {
+        video.play();
+    });
+
+    video.addEventListener('mouseleave', () => {
+        video.pause();
+        video.currentTime = 0;
+    });
+
+    // Mobile and touchscreens: tap to play/pause
+    video.addEventListener('click', () => {
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    });
+});
     </script>
 </body>
 </html>
