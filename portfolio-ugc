@@ -1,0 +1,458 @@
+---
+title: All Reels & Videos
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        :root {
+            --bg-color: #faf9f6;
+            --card-bg: #ffffff;
+            --text-main: #2b2b2b;
+            --accent-pink: #ffd6d6;
+            --accent-blue: #d6e4ff;
+            --accent-purple: #ebd6ff;
+            --border-radius: 16px;
+        }
+
+        body {
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+        }
+
+        h1 { 
+            font-weight: 800; 
+            letter-spacing: -1px; 
+            margin-bottom: 30px; 
+            text-align: center; 
+        }
+
+        /* 🔍 Haku ja napit */
+        .controls-wrapper { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-bottom: 40px; 
+        }
+
+        .search-input { 
+            width: 100%; 
+            padding: 14px 20px; 
+            font-size: 1rem; 
+            border: 1px solid rgba(0,0,0,0.1); 
+            border-radius: 30px; 
+            box-sizing: border-box; 
+            outline: none; 
+        }
+
+        .filter-buttons { 
+            display: flex; 
+            gap: 10px; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+        }
+
+        .btn-filter { 
+            padding: 8px 16px; 
+            border: 1px solid rgba(0,0,0,0.05); 
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+        }
+
+        .btn-filter.active, .btn-filter:hover { 
+            background: var(--text-main); 
+            color: #ffffff; 
+        }
+
+        /* 📱 Video-ruudukko */
+        .video-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+            gap: 30px; 
+            width: 100%; 
+            margin-bottom: 40px; 
+        }
+
+        .video-card { 
+            background: var(--card-bg); 
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            border-radius: var(--border-radius); 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03); 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .video-card:hover { 
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        /* 🎬 Pystysuuntainen kuva-alusta */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            background: #eeeeee;
+            overflow: hidden;
+        }
+
+        .video-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ✨ Canva Hover-efektit */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .video-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: rgba(0, 0, 0, 0.75);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: -0.2px;
+        }
+
+        /* 📝 Tekstiosiot kortissa */
+        .video-info { 
+            padding: 20px; 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+        }
+
+        .video-title { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            margin: 0 0 10px 0; 
+            letter-spacing: -0.3px;
+        }
+
+        .video-desc { 
+            font-size: 0.9rem; 
+            opacity: 0.6; 
+            margin: 0 0 15px 0; 
+            line-height: 1.4; 
+        }
+
+        .tag-container { 
+            display: flex; 
+            gap: 6px; 
+        }
+
+        .tag { 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            padding: 4px 10px; 
+            border-radius: 12px; 
+            text-transform: uppercase; 
+        }
+
+        .tag-fi { background-color: var(--accent-blue); }
+        .tag-en { background-color: var(--accent-pink); }
+        .tag-reels { background-color: var(--accent-purple); }
+
+        .preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎬 Lyhytvideot (Reels)</h1>
+
+        <div class="controls-wrapper">
+            <input type="text" id="searchInput" class="search-input" placeholder="Search videos...">
+            <div class="filter-buttons">
+                <button class="btn-filter active" onclick="filterPage('all')">All</button>
+                <button class="btn-filter" onclick="filterPage('beauty')">Beauty</button>
+                <button class="btn-filter" onclick="filterPage('lifestyle')">Lifestyle</button>
+                <button class="btn-filter" onclick="filterPage('fi')">Finnish 🇫🇮</button>
+                <button class="btn-filter" onclick="filterPage('en')">English 🇬🇧</button>
+                <button class="btn-filter" onclick="filterPage('se')">Swedish 🇸🇪</button>
+            </div>
+        </div>
+
+        <div class="video-grid" id="videoGrid">
+            
+            <!-- 📹 VIDEOKORTTI 1  -->
+            <a href="https://canva.link/cg4zxd20e8vpsc9" target="_blank" rel="noopener noreferrer" class="video-card" data-category="beauty" data-title="video" data-lang="en" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="./image00002.gif" alt="Viraali Reel Video thumbnail" class="preview-image" loading="lazy" />
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Product Showcase Earrings</h3>
+                        <p class="video-desc"
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-fi">en</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://canva.link/ytnw0ahnneo77db" target="_blank" rel="noopener noreferrer" class="video-card" data-category="beauty" data-title="video" data-lang="en" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="./image00001.gif" alt="Viraali Reel Video thumbnail" class="preview-image" loading="lazy" />
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Product Showcase Lipgloss</h3>
+                        <p class="video-desc"
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-fi">en</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://ik.imagekit.io/oac9w3q3g/cat-reel-viral.mp4?updatedAt=1792403144468" target="_blank" rel="noopener noreferrer" class="video-card" data-title="video" data-lang="en" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="https://ik.imagekit.io/oac9w3q3g/preview-video1.JPG" alt="Viraali Reel Video thumbnail" class="preview-image" loading="lazy" />
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Viraali Reel Video</h3>
+                        <p class="video-desc">347 tuhatta katselukertaa kerännyt video omasta harrasteprojektista. Video on näytöntallennus youtubesta, joten laatu valitettavasti heikko. Organic Social Media Content</p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-fi">fi</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://canva.link/cus7v85muf71ilg" target="_blank" class="video-card" data-title="video" data-lang="se" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="./copy_EB8E5F63-AD7E-48DF-BF72-43B4E65ABD6F.gif" alt="Uutisvideo">
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Tuotevideo kissanruoka ruotsiksi</h3>
+                        <p class="video-desc">Product Showcase Swedish</p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-en">Se</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+             <a href="https://canva.link/e703qun4hj7n9ky" target="_blank" class="video-card" data-title="video" data-lang="en" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="./copy_EB8E5F63-AD7E-48DF-BF72-43B4E65ABD6F.gif" alt="Uutisvideo">
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Tuotevideo kissanruoka englanniksi</h3>
+                        <p class="video-desc">Product Showcase English</p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-en">Englanti</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://canva.link/u3unvvb0ob5ubyj" target="_blank" class="video-card" data-title="video" data-lang="fi" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="./copy_EB8E5F63-AD7E-48DF-BF72-43B4E65ABD6F.gif" alt="Uutisvideo">
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Tuotevideo kissanruoka suomeksi</h3>
+                        <p class="video-desc">Product Showcase Finnish</p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-fi">Fi</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://ik.imagekit.io/oac9w3q3g/copy_9C8A7EE5-43E4-411D-8FB7-1D458A55033C.mov" target="_blank" class="video-card" data-title="video" data-lang="fi" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="https://ik.imagekit.io/oac9w3q3g/copy_2C5C8145-CB9F-44D5-A9BC-82ECEEE8CF2C.gif" alt="Uutisvideo">
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Esimerkkivideo</h3>
+                        <p class="video-desc"></p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-fi">fi</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <a href="https://ik.imagekit.io/oac9w3q3g/D7768006-3122-4341-B2EA-590EA2BEEC91.mov" target="_blank" class="video-card" data-title="video" data-lang="fi" style="text-decoration: none; color: inherit;">
+                <div class="video-wrapper">
+                    <img src="https://ik.imagekit.io/oac9w3q3g/image00002.gif" alt="Uutisvideo">
+                    <div class="play-overlay">
+                        <span class="play-icon">▶ Watch</span>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <div>
+                        <h3 class="video-title">Esimerkkivideo</h3>
+                        <p class="video-desc"></p>
+                    </div>
+                    <div class="tag-container">
+                        <span class="tag tag-fi">fi</span>
+                        <span class="tag tag-reels">reels</span>
+                    </div>
+                </div>
+            </a>
+            <!-- Voit lisätä uusia kortteja kopioimalla tuon <a>...</a> -blokin suoraan tähän alle -->
+
+        </div>
+    </div>
+
+    <!-- Haku- ja suodatuslogiikka suoraan selaimessa -->
+
+<script>
+    let activeFilter = 'all';
+
+    function filterPage(filter) {
+        activeFilter = filter;
+
+        // Update active button
+        document.querySelectorAll('.btn-filter').forEach(btn => {
+            const match = btn.getAttribute('onclick')
+                ?.match(/filterPage\('([^']+)'\)/);
+
+            btn.classList.toggle(
+                'active',
+                match && match[1] === filter
+            );
+        });
+
+        // Clear search when changing filters
+        document.getElementById('searchInput').value = '';
+
+        updateVideos();
+    }
+
+    function updateVideos() {
+        const query = document.getElementById('searchInput')
+            .value.toLowerCase().trim();
+
+        document.querySelectorAll('.video-card').forEach(card => {
+            const title = (
+                card.getAttribute('data-title') || ''
+            ).toLowerCase();
+
+            const desc = (
+                card.querySelector('.video-desc')?.textContent || ''
+            ).toLowerCase();
+
+            const category = (
+                card.getAttribute('data-category') || ''
+            ).toLowerCase().split(/\s+/);
+
+            const lang = (
+                card.getAttribute('data-lang') || ''
+            ).toLowerCase();
+
+            const matchesFilter =
+                activeFilter === 'all' ||
+                category.includes(activeFilter) ||
+                lang === activeFilter;
+
+            const matchesSearch =
+                title.includes(query) || desc.includes(query);
+
+            card.style.display =
+                matchesFilter && matchesSearch ? 'flex' : 'none';
+        });
+    }
+
+    // Search works together with the selected filter
+    document.getElementById('searchInput')
+        .addEventListener('input', updateVideos);
+
+    // Preview videos: play on hover, pause on leave
+    document.querySelectorAll('.preview-video').forEach(video => {
+        video.addEventListener('mouseenter', () => {
+            video.play();
+        });
+
+        video.addEventListener('mouseleave', () => {
+            video.pause();
+            video.currentTime = 0;
+        });
+
+        // Tap to play/pause on touchscreens
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
